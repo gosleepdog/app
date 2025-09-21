@@ -201,9 +201,15 @@
     }
     #gnb.on #gnb_menu_bg {visibility: visible;}
     #gnb.on #gnb_menu {transform: translateX(0);}
-    #gnb.on > *, #gnb.on ~ * {filter: blur(4px); transition: filter 0.2s;}
-    #gnb_menu_bg, #btn_gnb {filter: none!important;}
-    
+    #gnb.on > *, #gnb.on ~ * {
+      filter: blur(4px);
+      transition: filter 0.2s;
+      pointer-events: none;
+    }
+    #gnb_menu_bg, #btn_gnb {
+      filter: none!important;
+      pointer-events: initial!important;
+    }
     #gnb .line {margin: 1em 0;}
     
     footer {margin-top: auto;}
@@ -363,6 +369,7 @@
     const ID_BTN_RANDOM = document.getElementById('btn_primary_random');
     const ID_BTN_GNB = document.getElementById('btn_gnb');
     const ID_GNB = document.getElementById('gnb');
+    const ID_GNB_MENU = document.getElementById('gnb_menu');
     const IDS_LOGO = document.querySelectorAll('[id*="logo"]');
     const newImage = new Image();
 
@@ -377,6 +384,15 @@
     ID_BTN_GNB.addEventListener('click', function(){
       ID_GNB.classList.toggle('on');
     });
+
+    // ID_GNB.addEventListener('click', function(e){
+    //   if (this.classList.contains('on') &&
+    //   !ID_GNB_MENU.contains(e.target))
+    //   this.classList.remove('on');
+
+    //   else if (ID_BTN_GNB.contains(e.target))
+    //   this.classList.add('on');
+    // });
   </script>
 </body>
 </html>
