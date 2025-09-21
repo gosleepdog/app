@@ -147,21 +147,22 @@
     @keyframes btn_gnb_logo {
       40% {width: 100%;}
       80% {
-        height: 3px;
+        height: 2px;
         border-radius: 0;
         background-color: transparent;
       }
       to {
         width: 2.4em;
-        height: 3px;
-        border-radius: 3px;
+        height: 2px;
+        border-radius: 2px;
         transform: translate(-50%, -50%) scaleX(-1) rotate(-45deg);
         background-color: #fff;
       }
     }
     #gnb.on #btn_gnb_line {
-      height: 3px;
-      border-radius: 3px;
+      width: 2.4em;
+      height: 2px;
+      border-radius: 2px;
       background-color: #fff;
       opacity: 0;
       animation: btn_gnb_line 0.2s ease-out forwards;
@@ -169,12 +170,10 @@
     }
     @keyframes btn_gnb_line {
       from {
-        width: 2.4em;
         opacity: 1;
         transform: translate(-50%, -50%) rotate(45deg);
       }
       to {
-        width: 2.4em;
         opacity: 1;
         transform: translate(-50%, -50%) rotate(135deg);
       }
@@ -218,7 +217,7 @@
 
     #btn_download_app {
       display: block;
-      display: none;
+      display: none!important;
       width: 100%; max-width: 12em; height: 6em;
       margin: auto 0;
       padding: 0.8em;
