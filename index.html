@@ -215,28 +215,52 @@
     }
     #gnb .line {margin: 1em 0;}
 
-    #btn_download_app {
+    #btn_download_app,
+    #btn_download_app[download]:active {
+      position: relative;
       display: block;
-      display: none!important;
       width: 100%; max-width: 12em; height: 6em;
       margin: auto 0;
       padding: 0.8em;
       box-sizing: border-box;
       border-radius: 0.4em;
       background-color: hsla(0, 0%, 100%, 88%);
-      cursor: pointer;
+      opacity: 0.5;
+      filter: grayscale(20%);
+      pointer-events: none;
       display: flex;
       flex-direction: column;
-      gap: 1em;
+      gap: 0.4em;
     }
-    #btn_download_app span {
-      font-size: 0.8em;
-      color: #222;
+    #btn_download_app[download] {
+      opacity: 1;
+      filter: none;
+      cursor: pointer;
+      pointer-events: auto;
     }
-    .download_icon {}
-    .download_icon::after {}
-    .download_icon::before {}
-    
+    #btn_download_app strong {color: hsl(0, 0%, 32%);}
+    #btn_download_app small {
+      display: none;
+      color: hsl(0, 0%, 40%);
+      font-weight: normal;
+    }
+    #btn_download_app[download] small {display: inline;}
+    .download_icon {
+      align-self: flex-end;
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      width: 3.2em; height: 3.2em;
+      border-radius: 50%;
+      background-color: #ccc;
+      background-image: radial-gradient(circle, transparent 40%, hsla(0, 0%, 0%, 20%) 100%);
+    }
+    .download_icon::after {
+      display: block; content: '';
+      width: 60%; padding-top: 56%;
+      margin: 22% auto;
+      background-color: #fff;
+      clip-path: polygon(32% 0%, 68% 0%, 68% 50%, 100% 50%, 50% 100%, 0% 50%, 32% 50%);
+    }
     footer {margin-top: auto;}
     footer small {color: #ccc;}
   </style>
@@ -249,7 +273,7 @@
       background-color: inherit;
       transform: translateX(-50%);
       visibility: hidden;
-      animation: section_splash 2.8s;
+      animation: section_splash 2.6s;
       z-index: 2;
       display: flex;
       flex-direction: column;
@@ -268,10 +292,10 @@
       display: block;
       width: 24%; height: 0; padding-top: 24%;
       background: url(https://gosleepdog.github.io/app/img/logo.png) center / contain no-repeat;
-      animation: splash_logo 1s ease-in-out 0.4s;
+      animation: splash_logo 0.8s ease-in-out 0.4s;
     }
     @keyframes splash_logo {
-      60% {top: -8%;}
+      46%, 54% {top: -8%;}
       88% {transform: rotate(360deg);}
       to {transform: rotate(360deg);}
     }
@@ -298,11 +322,11 @@
           <h2>기본 정보</h2>
           <small>고졸개 유튜브 채널에 공개된 최신 영상을 랜덤하게 추첨합니다. 앞으로 뭘 볼지 고민하지 말고 매일 매일 졸개로운 하루를 보내세요.</small>
           <i class="line"></i>
-          <b id="btn_download_app">
-            <span>앱 다운로드!</span>
-            <span>용량: xxx</span>
+          <a id="btn_download_app" href="https://gosleepdog.github.io/files/app.apk">
+            <strong>APK 다운로드!</strong>
+            <small>용량: xxx</small>
             <i class="download_icon"></i>
-          </b>
+          </a>
           <footer>
             <small>제작: sleepdog<br> 마지막 업데이트: 25.09.21</small>
           </footer>
