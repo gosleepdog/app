@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>고졸개 App</title>
+  <link rel="icon" href="https://gosleepdog.github.io/app/img/icon.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      text-decoration: none;
+      list-style: none;
+      user-select: none;
+    }
+    button {all: unset; cursor: pointer;}
+    </style>
+  <style>
+    h1 {font-size: 2em; line-height: 1.4; text-align: center;}
+    h2 {font-size: 1.4em; line-height: 1.2;}
+    p, a, button {font-size: 1em; line-height: 1.4;}
+    small {font-size: smaller; line-height: 1.4;}
+
+    .line {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background-color: #fff;
+    }
+
+    [id*='btn_primary_'] {
+      display: block;
+      width: 100%; height: 3.6em;
+      border-radius: 0.4em;
+      background-color: hsl(200, 80%, 50%);
+      font-weight: 500;
+      line-height: 3.6em;
+      text-align: center;
+    }
+    [id*='btn_primary_']:active {
+      background-image: linear-gradient(#0004 0%, #0004 100%);
+      transform: scale(96%);
+      transition: transform 80ms;
+    }
+  </style>
+  <style>
+    body {background-color: hsl(0, 0%, 8%);}
+    section {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 600px;
+      padding: 2em;
+      box-sizing: border-box;
+    }
+    #section_content {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    #section_content > article > * {margin-top: 1em;}
+    #link {
+      position: relative;
+      display: block;
+      width: 100%; height: 0;
+      padding-top: calc(100% / 480 * 360);
+      box-sizing: border-box;
+    }
+    #thumbnail {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      text-indent: -9999px;
+      object-fit: cover;
+      object-position: center;
+    }
+    #thumbnail::after {
+      position: absolute;
+      left: 0; top: 0;
+      content: 'Loading...';
+      width: 100%; height: 100%;
+      background-color: gray;
+      color: #fff;
+      font-size: 3em;
+      font-weight: bold;
+      text-indent: 0;
+      z-index: -1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #title {
+      display: block;
+      min-height: calc(1em * 2);
+      font-weight: bold;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    @supports (display: -webkit-box) {
+      #title {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+    }
+    #btn_primary_youtube {background-color: hsl(0, 80%, 50%);}
+  </style>
+  <style>
+    #gnb {
+      position: relative;
+      min-height: 2.4em;
+      margin-bottom: 1em;
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #gnb_title {
+      flex-grow: 1;
+      word-break: keep-all;
+    }
+    #btn_gnb {
+      flex-shrink: 0;
+      position: relative;
+      height: 2.4em; width: 2.4em;
+      cursor: pointer;
+      z-index: 1;
+    }
+    [id*='btn_gnb_'] {
+      position: absolute;
+      left: 50%; top: 50%;
+      display: block;
+      width: 100%; height: 100%;
+      transform: translate(-50%, -50%) scaleX(-1);
+    }
+    #btn_gnb_logo {
+      background: url(https://gosleepdog.github.io/app/img/logo.png) center / 100% no-repeat;
+    }
+    #gnb.on #btn_gnb_logo {
+      animation: btn_gnb_logo 0.4s forwards;
+    }
+    @keyframes btn_gnb_logo {
+      80% {
+        height: 3px;
+        border-radius: 0;
+        background-color: transparent;
+      }
+      to {
+        height: 3px;
+        border-radius: 3px;
+        transform: translate(-50%, -50%) scaleX(-1) rotate(-45deg);
+        background-color: #fff;
+      }
+    }
+    #gnb.on #btn_gnb_line {
+      height: 3px;
+      border-radius: 3px;
+      background-color: #fff;
+      opacity: 0;
+      animation: btn_gnb_line 0.2s ease-out forwards;
+      animation-delay: 0.2s;
+    }
+    @keyframes btn_gnb_line {
+      from {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(135deg);
+      }
+    }
+    #gnb_menu_bg {
+      position: fixed;
+      left: 50%; top: 0;
+      width: 100%;
+      max-width: 600px;
+      height: 100svh;
+      background-color: hsla(0, 0%, 8%, 50%);
+      transform: translateX(-50%);
+      overflow: hidden;
+      visibility: hidden;
+    }
+    #gnb_menu {
+      position: absolute;
+      left: 0; top: 0;
+      width: calc(100% - 6.4em); height: 100%;
+      padding: 6em 2em;
+      box-sizing: border-box;
+      background-color: hsla(0, 0%, 8%, 80%);
+      transform: translateX(-100%);
+      transition: transform 0.4s;
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+    #gnb.on #gnb_menu_bg {visibility: visible;}
+    #gnb.on #gnb_menu {transform: translateX(0);}
+    #gnb.on > *, #gnb.on ~ * {filter: blur(4px); transition: filter 0.2s;}
+    #gnb_menu_bg, #btn_gnb {filter: none!important;}
+    
+    #gnb .line {margin: 1em 0;}
+    
+    footer {margin-top: auto;}
+    footer small {color: #ccc;}
+  </style>
+  <style>
+    #section_splash {
+      position: fixed;
+      left: 50%; top: 0;
+      width: 100%;
+      height: 100svh;
+      background-color: inherit;
+      transform: translateX(-50%);
+      visibility: hidden;
+      animation: section_splash 2.8s;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2em;
+    }
+    @keyframes section_splash {
+      from {visibility: visible;}
+      96% {opacity: 1;}
+      to {opacity: 0;}
+    }
+    #splash_logo {
+      position: relative;
+      top: 0;
+      display: block;
+      width: 24%; height: 0; padding-top: 24%;
+      background: url(https://gosleepdog.github.io/app/img/logo.png) center / contain no-repeat;
+      animation: splash_logo 1s ease-in-out 0.4s;
+    }
+    @keyframes splash_logo {
+      60% {top: -8%;}
+      88% {transform: rotate(360deg);}
+      to {transform: rotate(360deg);}
+    }
+  </style>
+  <style>
+    @media (max-width: 320px) {body {font-size: 0.9em;}}
+    @media (min-width: 600px) {#gnb_title br {display: none;}}
+  </style>
+</head>
+<body>
+  <section id="section_splash">
+    <i id="splash_logo"></i>
+    <h1>고졸개<br>랜덤 영상 추첨기</h1>
+  </section>
+  <section id="section_content">
+    <nav id="gnb">
+      <h2 id="gnb_title">최신 영상 랜덤으로 <br>추천받기</h2>
+      <div id="btn_gnb">
+        <b id="btn_gnb_logo"></b>
+        <b id="btn_gnb_line"></b>
+      </div>
+      <aside id="gnb_menu_bg">
+        <div id="gnb_menu">
+          <h2>기본 정보</h2>
+          <small>고졸개 유튜브 채널에 공개된 최신 영상을 랜덤하게 추첨합니다. 앞으로 뭘 볼지 고민하지 말고 매일 매일 졸개로운 하루를 보내세요.</small>
+          <i class="line"></i>
+          <footer>
+            <small>제작: sleepdog<br> 마지막 업데이트: 25.09.21</small>
+          </footer>
+        </div>
+      </aside>
+    </nav>
+    <article id="content_main">
+      <a id="link" target="_blank">
+        <img id="thumbnail" src="https://via.placeholder.com/480x360?text=썸네일" alt="썸네일">
+      </a>
+      <a id="title" href="#" target="_blank">버튼을 눌러 최신 영상을 랜덤으로 추천 받아보세요!</a>
+    </article>
+    <article id="content_btn">
+      <button id="btn_primary_random">최신 동영상 랜덤 뽑기</button>
+      <a id="btn_primary_youtube" href="https://www.youtube.com/@%EA%B3%A0%EC%A1%B8%EA%B0%9C" target="_blank">고졸개 유튜브 채널</a>
+    </article>
+  </section>
+  <script>
+    const CHANNEL_ID = "UC7M_iG9q9TS-YO6v2dhiQ9Q";
+    const RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+    const PROXY = "https://api.allorigins.win/get?url=";
+    const MAX_RETRIES = 10;
+
+    let isLoading = false;
+
+    function extractVideoId(url) {
+      const match = url.match(/v=([a-zA-Z0-9_-]{11})/);
+      return match ? match[1] : null;
+    }
+
+    async function fetchRSS() {
+      const res = await fetch(PROXY + encodeURIComponent(RSS_URL));
+      if (!res.ok) throw new Error("RSS 가져오기 실패");
+      const data = await res.json();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(data.contents, "application/xml");
+      const entries = xml.querySelectorAll("entry");
+      if (!entries.length) throw new Error("업로드 영상 없음");
+
+      return Array.from(entries).map(entry => {
+        const title = entry.querySelector("title")?.textContent || "제목 없음";
+        const link = entry.querySelector("link")?.getAttribute("href") || "#";
+        const videoId = extractVideoId(link);
+        const thumbnail = entry.querySelector("media\\:group media\\:thumbnail")?.getAttribute("url") ||
+          `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        return { title, link, thumbnail, videoId };
+      });
+    }
+
+    async function isPublicVideo(link) {
+      try {
+        const oEmbedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(link)}&format=json`;
+        const res = await fetch(oEmbedUrl);
+        return res.ok;
+      } catch {
+        return false;
+      }
+    }
+
+    async function showRandomVideo() {
+      if (isLoading) return;
+      isLoading = true;
+
+      try {
+        const videos = await fetchRSS();
+        let attempts = 0;
+
+        while (attempts < MAX_RETRIES) {
+          const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+          const publicCheck = await isPublicVideo(randomVideo.link);
+
+          if (publicCheck) {
+            document.getElementById("thumbnail").src = randomVideo.thumbnail;
+            document.getElementById("link").href = randomVideo.link;
+            const titleEl = document.getElementById("title");
+            titleEl.textContent = randomVideo.title;
+            titleEl.href = randomVideo.link;
+            return;
+          }
+
+          attempts++;
+        }
+
+        console.log("재시도 최대 횟수 초과, 기존 정보 유지");
+
+      } catch (err) {
+        console.error("오류 발생:", err.message);
+      } finally {
+        isLoading = false;
+      }
+    }
+  </script>
+  <script>
+    const ID_BTN_RANDOM = document.getElementById('btn_primary_random');
+    const ID_BTN_GNB = document.getElementById('btn_gnb');
+    const ID_GNB = document.getElementById('gnb');
+    const IDS_LOGO = document.querySelectorAll('[id*="logo"]');
+    const newImage = new Image();
+
+    document.addEventListener('DOMContentLoaded', showRandomVideo);
+
+    newImage.src = 'https://gosleepdog.github.io/app/img/logo.png';
+    newImage.onerror = () => {
+      IDS_LOGO.forEach(e => e.style.boxShadow = 'inset 0 0 0 1px #fff');
+    }
+
+    ID_BTN_RANDOM.addEventListener('click', showRandomVideo);
+    ID_BTN_GNB.addEventListener('click', function(){
+      ID_GNB.classList.toggle('on');
+    });
+  </script>
+</body>
+</html>
