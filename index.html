@@ -216,7 +216,7 @@
     #gnb .line {margin: 1em 0;}
 
     #btn_download_app,
-    #btn_download_app[download]:active {
+    #btn_download_app[href]:active {
       position: relative;
       display: block;
       width: 100%; max-width: 12em; height: 6em;
@@ -232,19 +232,20 @@
       flex-direction: column;
       gap: 0.4em;
     }
-    #btn_download_app[download] {
+    #btn_download_app[href] {
       opacity: 1;
       filter: none;
       cursor: pointer;
       pointer-events: auto;
     }
+    #btn_download_app[href]:active {pointer-events: auto;}
     #btn_download_app strong {color: hsl(0, 0%, 32%);}
     #btn_download_app small {
       display: none;
       color: hsl(0, 0%, 40%);
       font-weight: normal;
     }
-    #btn_download_app[download] small {display: inline;}
+    #btn_download_app[href] small {display: inline;}
     .download_icon {
       align-self: flex-end;
       position: absolute;
@@ -322,7 +323,8 @@
           <h2>기본 정보</h2>
           <small>고졸개 유튜브 채널에 공개된 최신 영상을 랜덤하게 추첨합니다. 앞으로 뭘 볼지 고민하지 말고 매일 매일 졸개로운 하루를 보내세요.</small>
           <i class="line"></i>
-          <a id="btn_download_app" href="https://gosleepdog.github.io/files/app.apk" download="고졸개 App.apk">
+          <!-- <a id="btn_download_app" href="https://gosleepdog.github.io/files/app.apk" download="고졸개 App.apk"> -->
+          <a id="btn_download_app" href="https://drive.google.com/file/d/1zUZG-HNtsjKCsPYfxNEhQp4E7wYKHdjd/view" target="_blank">
             <strong>APK 다운로드!</strong>
             <small>용량: 5.53MB</small>
             <i class="download_icon"></i>
