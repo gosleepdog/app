@@ -20,7 +20,7 @@
   <style>
     h1 {font-size: 2em; line-height: 1.4; text-align: center;}
     h2 {font-size: 1.4em; line-height: 1.2;}
-    p, a, button {font-size: 1em; line-height: 1.4;}
+    p, a, b, i, button {font-size: 1em; line-height: 1.4;}
     small {font-size: smaller; line-height: 1.4;}
 
     .line {
@@ -112,7 +112,7 @@
   <style>
     #gnb {
       position: relative;
-      min-height: 2.4em;
+      min-height: 3.2em;
       margin-bottom: 1em;
       overflow: hidden;
       z-index: 1;
@@ -127,7 +127,7 @@
     #btn_gnb {
       flex-shrink: 0;
       position: relative;
-      height: 2.4em; width: 2.4em;
+      width: 3.2em; height: 3.2em;
       cursor: pointer;
       z-index: 1;
     }
@@ -145,12 +145,14 @@
       animation: btn_gnb_logo 0.4s forwards;
     }
     @keyframes btn_gnb_logo {
+      40% {width: 100%;}
       80% {
         height: 3px;
         border-radius: 0;
         background-color: transparent;
       }
       to {
+        width: 2.4em;
         height: 3px;
         border-radius: 3px;
         transform: translate(-50%, -50%) scaleX(-1) rotate(-45deg);
@@ -167,10 +169,12 @@
     }
     @keyframes btn_gnb_line {
       from {
+        width: 2.4em;
         opacity: 1;
         transform: translate(-50%, -50%) rotate(45deg);
       }
       to {
+        width: 2.4em;
         opacity: 1;
         transform: translate(-50%, -50%) rotate(135deg);
       }
@@ -211,6 +215,28 @@
       pointer-events: initial!important;
     }
     #gnb .line {margin: 1em 0;}
+
+    #btn_download_app {
+      display: block;
+      display: none;
+      width: 100%; max-width: 12em; height: 6em;
+      margin: auto 0;
+      padding: 0.8em;
+      box-sizing: border-box;
+      border-radius: 0.4em;
+      background-color: hsla(0, 0%, 100%, 88%);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+    #btn_download_app span {
+      font-size: 0.8em;
+      color: #222;
+    }
+    .download_icon {}
+    .download_icon::after {}
+    .download_icon::before {}
     
     footer {margin-top: auto;}
     footer small {color: #ccc;}
@@ -273,6 +299,11 @@
           <h2>기본 정보</h2>
           <small>고졸개 유튜브 채널에 공개된 최신 영상을 랜덤하게 추첨합니다. 앞으로 뭘 볼지 고민하지 말고 매일 매일 졸개로운 하루를 보내세요.</small>
           <i class="line"></i>
+          <b id="btn_download_app">
+            <span>앱 다운로드!</span>
+            <span>용량: xxx</span>
+            <i class="download_icon"></i>
+          </b>
           <footer>
             <small>제작: sleepdog<br> 마지막 업데이트: 25.09.21</small>
           </footer>
